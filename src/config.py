@@ -1,6 +1,7 @@
 import os
 import sys
 from dotenv import load_dotenv
+from llama_index.llms.mistralai import MistralAI
 from llama_index.llms.ollama import Ollama
 from llama_index.embeddings.ollama import OllamaEmbedding
 from llama_index.core import Settings, StorageContext
@@ -16,14 +17,15 @@ QDRANT_URL = os.getenv("QDRANT_URL", "localhost")
 QDRANT_PORT = int(os.getenv("QDRANT_PORT", 6333))
 OLLAMA_URL = os.getenv("OLLAMA_URL", "http://localhost:11434")
 COLLECTION_NAME = "financial_compliance"
+MISTRAL_API_KEY = os.getenv("MISTRAL_API_KEY")
 
 
 def get_config():
     """
     Sets up and returns all necessary configurations for the application.
     """
-    # Configure LlamaIndex to use local Ollama models
-    Settings.llm = Ollama(model="llama3:8b", base_url=OLLAMA_URL)
+    # Configure LlamaIndex to use local Mistral  models
+    Settings.llm = MistralAI(model="mistral-medium", api_key=MISTRAL_API_KEY)
 
     # The embedding model is used to convert documents into vectors
     Settings.embed_model = OllamaEmbedding(

@@ -8,14 +8,13 @@ This sprint focuses on building the core RAG pipeline by indexing financial regu
 
 ### Stack
 * **LlamaIndex**: For data ingestion and retrieval.
-* **Embeddings**: Google Gemini API (`models/embedding-001`).
-* **LLM**: Google Gemini API (`models/gemini-1.5-flash-latest`).
+* **Embeddings**: nomic-embed-text.
+* **LLM**: mistral-medium.
 * **Vector DB**: Qdrant (local first, via Docker).
 
 ### Prerequisites
 * Python 3.8 or higher
 * Docker & Docker Compose
-* A Google Gemini API Key
 
 ---
 
@@ -41,24 +40,23 @@ source .venv/bin/activate
 
 Install the required Python packages:
 ```bash
-pip install qdrant-client  python-dotenv  llama-index llama-index-vector-stores-qdrant llama-index-embeddings-google-genai llama-index-llms-google-genai 
-```
-## b. API Key Management
-For security, we store our API key in a local .env file. Create a file named .env in the project root with the following content:
-
-```bash
-
-GOOGLE_API_KEY="YOUR_API_KEY_HERE"
+pip install qdrant-client  python-dotenv  llama-index llama-index-vector-stores-qdrant llama-index-llms-ollama llama-index-embeddings-ollama llama-index-llms-mistralai
 ```
 
-Then, ensure this file is ignored by Git by adding .env to your .gitignore file.
-
-## c. Qdrant Setup
+## d. Qdrant Setup
 Start the Qdrant vector database using Docker Compose:
 
 ```bash
 
 docker compose up -d
+```
+
+
+## c. Ollama models
+Here are the commands onces the docker compose is up
+
+```bash
+ollama pull nomic-embed-text
 ```
 
 #### 3. Data Ingestion

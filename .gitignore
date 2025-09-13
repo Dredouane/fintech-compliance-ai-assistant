@@ -3,3 +3,8 @@
 __pycache__/
 *.pyc
 .env
+.venv_new/lib64
+.venv_new/bin/python
+.venv_new/bin/python3
+.venv_new/bin/python3.10
+.vscode/settings.json
