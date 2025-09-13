@@ -40,7 +40,7 @@ source .venv/bin/activate
 
 Install the required Python packages:
 ```bash
-pip install qdrant-client  python-dotenv  llama-index llama-index-vector-stores-qdrant llama-index-llms-ollama llama-index-embeddings-ollama llama-index-llms-mistralai
+pip install qdrant-client  python-dotenv  llama-index llama-index-vector-stores-qdrant llama-index-llms-ollama llama-index-embeddings-ollama llama-index-llms-mistralai langchain langchain-mistralai langchain-qdrant langchainhub presidio-analyzer presidio-anonymizer streamlit
 ```
 
 ## d. Qdrant Setup
