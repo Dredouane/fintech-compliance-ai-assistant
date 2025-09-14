@@ -2,11 +2,14 @@ import logging
 import os
 from llama_index.core import SimpleDirectoryReader, VectorStoreIndex, StorageContext
 from qdrant_client.http.models import Distance, VectorParams
-from config import get_config
+from config import get_rag_config
 
 # Set up logging for better visibility
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+
+compliance_rag_collection = os.getenv("COMPLIANCE_RAG_COLLECTION", "financial_compliance")
 
 def run_ingestion():
     """
@@ -14,18 +17,18 @@ def run_ingestion():
     """
     logger.info("Starting file-by-file ingestion process...")
 
-    qdrant_client, vector_store, collection_name = get_config()
+    qdrant_client, vector_store = get_rag_config()
 
     # Create the collection if it doesn't exist
-    if not qdrant_client.collection_exists(collection_name):
-        logger.info(f"Collection '{collection_name}' not found. Creating it now...")
+    if not qdrant_client.collection_exists(compliance_rag_collection):
+        logger.info(f"Collection '{compliance_rag_collection}' not found. Creating it now...")
         qdrant_client.create_collection(
-            collection_name=collection_name,
+            collection_name=compliance_rag_collection,
             vectors_config=VectorParams(size=768, distance=Distance.COSINE)
         )
         logger.info("Collection created.")
     else:
-        logger.info(f"Collection '{collection_name}' already exists.")
+        logger.info(f"Collection '{compliance_rag_collection}' already exists.")
 
     # Get a recursive list of all documents
     doc_paths = []
