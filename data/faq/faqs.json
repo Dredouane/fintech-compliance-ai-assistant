@@ -1,0 +1,22 @@
+[
+  {
+    "question": "What is AI compliance?",
+    "answer": "AI compliance refers to adhering to regulatory standards and legal requirements when developing and deploying AI systems, especially in regulated industries like finance."
+  },
+  {
+    "question": "Does AI replace human jobs?",
+    "answer": "AI is generally seen as a tool to augment human capabilities, automate repetitive tasks, and assist in decision-making, rather than completely replacing human roles in the financial sector."
+  },
+  {
+    "question": "How do you ensure data security with AI?",
+    "answer": "Ensuring data security with AI involves using robust encryption, access controls, anonymization techniques, and following data privacy regulations like GDPR."
+  },
+  {
+    "question": "What is a chatbot's role in compliance?",
+    "answer": "Chatbots can automate answers to routine compliance questions, streamline information access, and provide instant guidance on internal policies, reducing the workload on compliance officers."
+  },
+  {
+    "question": "What is MiFID II?",
+    "answer": "MiFID II is a regulation in the European Union that aims to increase transparency and protection for investors in financial markets."
+  }
+]
