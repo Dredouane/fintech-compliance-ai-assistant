@@ -1,0 +1,91 @@
+python3 src/compliance_search_cli.py 
+Ask a question about your documents (or 'exit' to quit): Which of the following is a key feature of the revised framework? choose response:A.A clear boundary between the trading and banking books. B.Elimination of the standardized approach. C.Sole reliance on historical data for risk assessment. D.Mandatory use of the internal models approach for all banks.
+INFO:__main__:Setting up the query engine with scoring method: rag_score...
+INFO:httpx:HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:6333/collections/financial_compliance/exists "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:6333/collections/financial_compliance "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:11434/api/embed "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6333/collections/financial_compliance/points/search "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:11434/api/embed "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6333/collections/financial_compliance/points/search "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.mistral.ai/v1/chat/completions "HTTP/1.1 200 OK"
+
+--- Final Result ---
+Confidence Score (rag_score): 0.7473
+
+--- LLM Response ---
+A. A clear boundary between the trading and banking books.
+
+--- Sources (Citations) ---
+File: bcbs189.pdf, Score: 0.7473
+File: d457.pdf, Score: 0.7244
+File: d424.pdf, Score: 0.7233
+
+--------------------------------------------------
+
+Ask a question about your documents (or 'exit' to quit): Give me the weather in Paris
+INFO:__main__:Setting up the query engine with scoring method: rag_score...
+INFO:httpx:HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:6333/collections/financial_compliance/exists "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:6333/collections/financial_compliance "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:11434/api/embed "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6333/collections/financial_compliance/points/search "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:11434/api/embed "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6333/collections/financial_compliance/points/search "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.mistral.ai/v1/chat/completions "HTTP/1.1 200 OK"
+WARNING:__main__:Confidence score 0.4896 is below threshold 0.7.
+Database tables checked/created successfully.
+INFO:__main__:Successfully logged low-confidence query for human review.
+
+--- Final Result ---
+Confidence Score (rag_score): 0.4896
+
+--- LLM Response ---
+I’m unable to provide the weather in Paris based on the given information, as the context provided pertains solely to regulatory documents related to market risk capital requirements and legal timelines.
+
+⚠️ **WARNING: Confidence is below the threshold. Please consult a human expert.**
+
+--- Sources (Citations) ---
+File: d457.pdf, Score: 0.4896
+File: CELEX_32022R2554_EN_TXT.pdf, Score: 0.4883
+File: d457.pdf, Score: 0.4790
+
+--------------------------------------------------
+
+Ask a question about your documents (or 'exit' to quit): 
+
+
+
+
+
+
+Query
+SELECT id,
+       original_query,
+       llm_response,
+       confidence_score,
+       score_type,
+       source_filenames,
+       "timestamp",
+       status
+FROM public.human_review_queue
+LIMIT 1000;
+
+
+Result 
+[
+ {
+  "id": 1,
+  "original_query": "",
+  "llm_response": "I\u2019m unable to provide the weather in Paris based on the given information, as the context provided pertains solely to regulatory documents related to market risk capital requirements and legal timelines.",
+  "confidence_score": "0.48958135",
+  "score_type": "rag_score",
+  "source_filenames": [
+   "d457.pdf",
+   "CELEX_32022R2554_EN_TXT.pdf",
+   "d457.pdf"
+  ],
+  "timestamp": "2025-09-14 12:07:14.081677+00",
+  "status": "pending"
+ }
+]

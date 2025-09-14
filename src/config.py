@@ -57,7 +57,7 @@ def get_sql_config():
         conn = psycopg2.connect(**DB_CONFIG)
         cur = conn.cursor()
         
-        with open("scripts/create_table.sql", "r") as f:
+        with open("scripts/create_postgres_tables.sql", "r") as f:
             cur.execute(f.read())
         
         conn.commit()

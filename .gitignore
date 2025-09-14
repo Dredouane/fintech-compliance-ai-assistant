@@ -8,10 +8,8 @@ __pycache__/
 .venv_new/bin/python3
 .venv_new/bin/python3.10
 .vscode/settings.json
-ollama_data/
-postgres_data/
-qdrant_data/
-ollama_models/id_ed25519
-ollama_models/id_ed25519.pub
-qdrant_storage/raft_state.json
-qdrant_storage/aliases/data.json
+ollama_data/*
+postgres_data/*
+qdrant_data/*
+ollama_models/*
+qdrant_storage/*

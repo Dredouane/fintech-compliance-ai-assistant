@@ -1,0 +1,44 @@
+python3 src/compliance_search_cli.py 
+Ask a question about your documents (or 'exit' to quit): Which of the following is a key feature of the revised framework? choose response:A.A clear boundary between the trading and banking books. B.Elimination of the standardized approach. C.Sole reliance on historical data for risk assessment. D.Mandatory use of the internal models approach for all banks.
+INFO:__main__:Setting up the query engine with scoring method: cleanlab_tlm...
+INFO:httpx:HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:6333/collections/financial_compliance/exists "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:6333/collections/financial_compliance "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:11434/api/embed "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6333/collections/financial_compliance/points/search "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:11434/api/embed "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6333/collections/financial_compliance/points/search "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.mistral.ai/v1/chat/completions "HTTP/1.1 200 OK"
+
+--- Final Result ---
+Confidence Score (cleanlab_tlm): 0.9190
+
+--- LLM Response ---
+The key feature of the revised framework is:
+
+**A. A clear boundary between the trading and banking books.**
+
+Explanation:
+The revised regulatory frameworks, such as Basel III reforms, emphasize clearer distinctions between the trading book and banking book to better capture risks and prevent regulatory arbitrage. The other options are incorrect because:
+
+- B: The standardized approach has not been eliminated; it remains an important part of the framework.
+- C: Sole reliance on historical data is not a feature; frameworks encourage forward-looking risk assessments.
+- D: Internal models are not mandatory for all banks; many banks use standardized approaches depending on their size and complexity.
+
+Therefore, **A** is the correct choice.
+
+--- Sources (Citations) ---
+File: bcbs189.pdf, Score: 0.7473
+File: d457.pdf, Score: 0.7244
+File: d424.pdf, Score: 0.7233
+File: d457.pdf, Score: 0.7231
+File: d457.pdf, Score: 0.7212
+File: d457.pdf, Score: 0.7211
+File: d424.pdf, Score: 0.7203
+File: d424.pdf, Score: 0.7180
+File: d457.pdf, Score: 0.7177
+File: d457.pdf, Score: 0.7171
+
+--------------------------------------------------
+
+Ask a question about your documents (or 'exit' to quit): 
