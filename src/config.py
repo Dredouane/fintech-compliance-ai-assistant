@@ -8,6 +8,7 @@ from llama_index.core import Settings, StorageContext
 from llama_index.vector_stores.qdrant import QdrantVectorStore
 from qdrant_client import QdrantClient
 import psycopg2
+import logging
 
 # Load environment variables from .env file
 load_dotenv()
@@ -27,26 +28,48 @@ DB_CONFIG = {
     "port": int(os.getenv("POSTGRES_PORT", 5432))
 }
 
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
-def get_rag_config(collection_name: str):
+# --- Re-Factored get_rag_config function ---
+def get_rag_config(compliance_rag_collection):
     """
-    Sets up and returns the LlamaIndex and Qdrant configurations for RAG.
+    Returns the Qdrant client and vector store, decoupled from LLM selection.
     """
-    # Configure LlamaIndex to use local Mistral models
-    Settings.llm = MistralAI(model="mistral-medium", api_key=MISTRAL_API_KEY)
-    Settings.embed_model = OllamaEmbedding(
-        model_name="nomic-embed-text",
-        base_url=OLLAMA_URL
+    logger.info("Setting up Qdrant client and vector store...")
+    qdrant_client = QdrantClient(
+        url=os.getenv("QDRANT_HOST"),
+        api_key=os.getenv("QDRANT_API_KEY"),
     )
-    
-    # Set up the Qdrant client and vector store
-    qdrant_client = QdrantClient(host=QDRANT_URL, port=QDRANT_PORT)
     vector_store = QdrantVectorStore(
         client=qdrant_client,
-        collection_name=collection_name
+        collection_name=compliance_rag_collection
     )
     
     return qdrant_client, vector_store
+
+
+def setup_llms():
+    """
+    Initializes and returns the small and medium LLMs from Mistral AI API.
+    """
+    # Get API key from environment variable
+    api_key = os.getenv("MISTRAL_API_KEY")
+    if not api_key:
+        raise ValueError("MISTRAL_API_KEY environment variable is not set. Please provide it.")
+    
+    # Small, fast model for classification and lightweight queries
+    small_llm = MistralAI(model="mistral-small", api_key=api_key)
+
+    # Medium model for complex queries
+    medium_llm = MistralAI(model="mistral-medium", api_key=api_key)
+    
+    # Use Ollama for the embedding model
+    Settings.embed_model = OllamaEmbedding(model_name="nomic-embed-text", base_url=OLLAMA_URL)
+    
+
+    return small_llm, medium_llm
 
 
 def get_sql_config():
