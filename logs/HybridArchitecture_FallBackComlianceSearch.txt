@@ -1,0 +1,98 @@
+python3 src/compliance_search_cli.py 
+Ask a question about your documents (or 'exit' to quit): How do you ensure data security with AI?
+INFO:query_router:Attempting primary query with small Mistral LLM and FAQ RAG...
+INFO:config:Setting up Qdrant client and vector store...
+INFO:httpx:HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:6333/collections/faq_compliance/exists "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:6333/collections/faq_compliance "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:11434/api/embed "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6333/collections/faq_compliance/points/search "HTTP/1.1 200 OK"
+INFO:query_router:FAQ RAG confidence score 0.8160 is above threshold. Using FAQ response.
+INFO:httpx:HTTP Request: POST http://localhost:11434/api/embed "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6333/collections/faq_compliance/points/search "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.mistral.ai/v1/chat/completions "HTTP/1.1 200 OK"
+Database tables checked/created successfully.
+INFO:query_router:Successfully logged fallback data for human review.
+
+--- Final Result ---
+Confidence Score (rag_score): 0.8160
+
+--- LLM Response ---
+By utilizing robust encryption, implementing access controls, and applying anonymization techniques, you can ensure data security when working with AI. Additionally, adhering to data privacy regulations such as GDPR is essential in maintaining secure AI systems.
+
+--- Sources (Citations) ---
+File: N/A, Score: 0.8160
+File: N/A, Score: 0.6016
+File: N/A, Score: 0.5722
+
+--------------------------------------------------
+
+Ask a question about your documents (or 'exit' to quit): Which of the following is a key feature of the revised framework? choose response:A.A clear boundary between the trading and banking books. B.Elimination of the standardized approach. C.Sole reliance on historical data for risk assessment. D.Mandatory use of the internal models approach for all banks.
+INFO:query_router:Attempting primary query with small Mistral LLM and FAQ RAG...
+INFO:config:Setting up Qdrant client and vector store...
+INFO:httpx:HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:6333/collections/faq_compliance/exists "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:6333/collections/faq_compliance "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:11434/api/embed "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6333/collections/faq_compliance/points/search "HTTP/1.1 200 OK"
+WARNING:query_router:FAQ RAG confidence score 0.6015 is below threshold. Falling back to complex RAG.
+INFO:config:Setting up Qdrant client and vector store...
+INFO:httpx:HTTP Request: GET http://localhost:6333 "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:6333/collections/financial_compliance/exists "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: GET http://localhost:6333/collections/financial_compliance "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:11434/api/embed "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6333/collections/financial_compliance/points/search "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:11434/api/embed "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST http://localhost:6333/collections/financial_compliance/points/search "HTTP/1.1 200 OK"
+INFO:httpx:HTTP Request: POST https://api.mistral.ai/v1/chat/completions "HTTP/1.1 200 OK"
+Database tables checked/created successfully.
+INFO:query_router:Successfully logged fallback data for human review.
+
+--- Final Result ---
+Confidence Score (rag_score): 0.7473
+
+--- LLM Response ---
+A. A clear boundary between the trading and banking books.
+
+--- Sources (Citations) ---
+File: bcbs189.pdf, Score: 0.7473
+File: d457.pdf, Score: 0.7244
+File: d424.pdf, Score: 0.7233
+
+--------------------------------------------------
+
+Ask a question about your documents (or 'exit' to quit): 
+
+
+
+SELECT id,
+       original_query,
+       faq_confidence,
+       fallback_confidence,
+       llm_response,
+       score_type,
+       "timestamp"
+FROM public.compliance_search_fallbacks_data
+LIMIT 1000;
+
+
+[
+ {
+  "id": 1,
+  "original_query": "How do you ensure data security with AI?",
+  "faq_confidence": "0.8160",
+  "fallback_confidence": null,
+  "llm_response": "By utilizing robust encryption, implementing access controls, and applying anonymization techniques, you can ensure data security when working with AI. Additionally, adhering to data privacy regulations such as GDPR is essential in maintaining secure AI systems.",
+  "score_type": "rag_score",
+  "timestamp": "2025-09-15 09:47:23.151149+00"
+ },
+ {
+  "id": 2,
+  "original_query": "Which of the following is a key feature of the revised framework? choose response:A.A clear boundary between the trading and banking books. B.Elimination of the standardized approach. C.Sole reliance on historical data for risk assessment. D.Mandatory use of the internal models approach for all banks.",
+  "faq_confidence": "0.6015",
+  "fallback_confidence": "0.7473",
+  "llm_response": "A. A clear boundary between the trading and banking books.",
+  "score_type": "rag_score",
+  "timestamp": "2025-09-15 09:49:49.505639+00"
+ }
+]
