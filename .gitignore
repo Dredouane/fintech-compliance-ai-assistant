@@ -13,3 +13,6 @@ postgres_data/*
 qdrant_data/*
 ollama_models/*
 qdrant_storage/*
+
+.venv_new/
+.venv*
